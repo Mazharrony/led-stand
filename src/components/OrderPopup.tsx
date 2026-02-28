@@ -1,5 +1,3 @@
-"use client";
-
 import type { PackageKey } from "@/data/districts";
 import { PACKAGES } from "@/data/districts";
 

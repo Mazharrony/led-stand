@@ -22,10 +22,7 @@ export default function PageClient() {
     <>
       <ProductGallery />
       <PricingCards onSelect={handleSelectPackage} />
-      <OrderSection
-        selectedPackage={selectedPackage}
-        onPackageChange={setSelectedPackage}
-      />
+      <OrderSection initialPackage={selectedPackage} />
       <Features />
       <FAQ />
     </>

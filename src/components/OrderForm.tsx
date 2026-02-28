@@ -10,8 +10,7 @@ import {
 import OrderPopup, { type OrderDetails } from "./OrderPopup";
 
 interface OrderFormProps {
-  selectedPackage: PackageKey;
-  onPackageChange: (pkg: PackageKey) => void;
+  initialPackage: PackageKey;
 }
 
 const PACKAGE_KEYS = Object.keys(PACKAGES) as PackageKey[];
@@ -44,16 +43,13 @@ function validate(form: FormState): Errors {
   return errors;
 }
 
-export default function OrderForm({
-  selectedPackage,
-  onPackageChange,
-}: OrderFormProps) {
+export default function OrderForm({ initialPackage }: OrderFormProps) {
   const [form, setForm] = useState<FormState>({
     name: "",
     phone: "",
     address: "",
     district: "",
-    packageKey: selectedPackage,
+    packageKey: initialPackage,
   });
 
   const [errors, setErrors] = useState<Errors>({});
@@ -64,10 +60,10 @@ export default function OrderForm({
     orderDetails?: OrderDetails;
   } | null>(null);
 
-  // Sync package from parent (pricing card clicks)
+  // Sync package when parent changes (pricing card clicks)
   useEffect(() => {
-    setForm((prev) => ({ ...prev, packageKey: selectedPackage }));
-  }, [selectedPackage]);
+    setForm((prev) => ({ ...prev, packageKey: initialPackage }));
+  }, [initialPackage]);
 
   const packagePrice = PACKAGES[form.packageKey].price;
   const deliveryCharge = form.district ? getDeliveryCharge(form.district) : 0;
@@ -83,9 +79,7 @@ export default function OrderForm({
     if (errors[name as keyof Errors]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
-    if (name === "packageKey") {
-      onPackageChange(value as PackageKey);
-    }
+
   }
 
   async function handleSubmit(e: React.FormEvent) {

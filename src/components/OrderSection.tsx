@@ -2,14 +2,10 @@ import type { PackageKey } from "@/data/districts";
 import OrderForm from "./OrderForm";
 
 interface OrderSectionProps {
-  selectedPackage: PackageKey;
-  onPackageChange: (pkg: PackageKey) => void;
+  initialPackage: PackageKey;
 }
 
-export default function OrderSection({
-  selectedPackage,
-  onPackageChange,
-}: OrderSectionProps) {
+export default function OrderSection({ initialPackage }: OrderSectionProps) {
   return (
     <section id="order" className="max-w-2xl mx-auto px-4 py-16 pb-24">
       <div className="text-center mb-10">
@@ -22,10 +18,7 @@ export default function OrderSection({
       </div>
 
       <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 md:p-8">
-        <OrderForm
-          selectedPackage={selectedPackage}
-          onPackageChange={onPackageChange}
-        />
+        <OrderForm initialPackage={initialPackage} />
       </div>
 
       {/* Footer note */}
